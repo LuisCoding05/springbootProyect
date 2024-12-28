@@ -1,0 +1,190 @@
+/* Contenedor principal de los formularios */
+body{
+    background-color: #dfd5d5;
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2,h3{
+    text-align: center;
+}
+
+.form-wrapper {
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Contenedor de cada formulario */
+.form-container {
+    display: grid;
+    align-items: start;
+    justify-content: center;
+    grid-template-columns: 1fr;
+    min-width: fit-content;
+    width: 80%;
+    max-width: 800px;
+    padding: 25px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.form-container > div {
+    margin: 20px auto;
+}
+
+
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+    margin: 20px auto; 
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px; 
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0; 
+    border: 1px solid darkblue; 
+    border-radius: 10px;
+    width: auto; 
+    min-width: 100%;
+    overflow: auto;
+    padding: 1rem;
+}
+
+
+table td, table th {
+    border: 1px solid darkblue; 
+    width: auto; 
+    text-align: center;
+    padding: 0.8rem;
+}
+
+.btn{
+    text-decoration: none;
+    display: flex; /* Centrar contenido con flexbox */
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.3); /* Bordes ligeros */
+    border-radius: 5px; /* Esquinas redondeadas */
+    width: fit-content;
+    padding: 10px; /* Eliminar relleno interno adicional */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.enlace {
+    color: white;
+    background-color: green;  
+}
+
+.lenguaje {
+    color: white;
+    background-color: purple;  
+}
+
+.lenguaje:hover {
+    background-color: rgb(164, 53, 164);  
+}
+
+.borrar {
+    color: white;
+    background-color: red;  
+}
+
+.borrar:hover {
+    background-color: rgb(255, 73, 73);  
+}
+
+.header, .footer {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    min-height: 10rem;
+}
+
+.footer {
+    min-height: 3rem;
+}
+
+.editar {
+    color: black;
+    background-color: yellow;  
+}
+
+.editar:hover {
+    color: rgb(42, 39, 39);
+    background-color: rgb(247, 255, 92);  
+}
+
+.enlace:hover, .borrar:hover, .submit:hover, .lenguaje:hover {
+    color: rgb(224, 216, 216);
+}
+
+.errores {
+    color: red;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.submit{
+    color: white;
+    background-color: blue; 
+}
+
+.submit:hover{
+    background-color: rgb(33, 163, 202);
+    border: 1px solid rgba(11, 62, 109, 0.767);
+}
+
+.enlace:hover{
+    background-color: rgb(29, 193, 48);
+    border: 1px solid rgba(41, 73, 43, 0.767);
+}
+
+#optionsLi >li{
+    list-style: none;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form label {
+    font-weight: bold;
+    margin: 0.5rem 0 0.3rem;
+    text-align: left;
+}
+
+.form input{
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
