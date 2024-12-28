@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indice de la página</title>
+    <!-- Vincula la hoja de estilos externa -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header th:replace="~{plantillas/plantilla :: header}"></header>
+    <!-- Contenedor principal para envolver todo el contenido -->
+    <div class="form-wrapper">
+        <div sec:authorize="hasRole('ROLE_ADMIN')" class="form-container">
+            <h1>[[#{titulo.opciones}]]</h1>
+            <ul id="optionsLi" class="btn-container">
+                <li><a th:href="@{/anexar}" class="btn enlace">[[#{persona.anexar}]]</a></li>
+            </ul>
+        </div>
+        
+        <!-- Segunda sección: Lista de múltiples personas -->
+        <div class="form-container">
+            <h2>[[#{persona.lista}]]</h2>
+            <!-- Verifica si la lista "personas" está vacía utilizando #lists.isEmpty -->
+            <!-- #lists es un objeto utilitario proporcionado por Thymeleaf para operaciones comunes con listas -->
+            <div th:if="${#lists.isEmpty(personas)}">
+                <!-- Mensaje que se muestra si no hay información disponible -->
+                <h3>[[#{persona.no-info}]]</h3>
+            </div>
+            <!-- Si la lista "personas" no está vacía, muestra una tabla con los datos -->
+            <div th:if="${!#lists.isEmpty(personas)}" class="table-wrapper">
+                <table>
+                    <thead>
+                        <!-- Cabecera de la tabla -->
+                        <tr>
+                            <th>[[#{persona.nombre}]] </th>
+                            <th>[[#{persona.apellido}]]</th>
+                            <th>[[#{persona.edad}]]</th>
+                            <th>[[#{persona.correo}]]</th>
+                            <th>[[#{persona.telefono}]]</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')" >[[#{boton.editar}]]</th>
+                            <th sec:authorize="hasRole('ROLE_ADMIN')" >[[#{boton.borrar}]]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Itera sobre cada persona en la lista "personas" -->
+                        <tr th:each="persona : ${personas}">
+                            <!-- Muestra el nombre de cada persona -->
+                            <td th:text="${persona.nombre}"></td>
+                            <!-- Muestra el apellido de cada persona -->
+                            <td th:text="${persona.apellido}"></td>
+                            <!-- Muestra la edad de cada persona -->
+                            <td th:text="${persona.edad}"></td>
+                            <!-- Muestra el teléfono de cada persona -->
+                            <td th:text="${persona.telefono}"></td>
+                            <!-- Muestra el correo de cada persona -->
+                            <td th:text="${persona.email}"></td>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/editar/} + ${persona.id}" class="btn editar" th:text="#{boton.editar}"></a> </td>
+                            <!-- Opcion1 -->
+                            <!-- <td><a th:href="@{/borrar/} + ${persona.id}" class="btn enlace" th:text="borrar"></a> </td> -->
+                            <!-- Opcion 2 -->
+                            <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/borrar(id=${persona.id})}" class="btn borrar" th:text="#{boton.borrar}"></a> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>
