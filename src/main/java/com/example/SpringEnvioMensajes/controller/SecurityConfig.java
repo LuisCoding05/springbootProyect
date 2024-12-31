@@ -29,53 +29,53 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/anexar", "/guardar", "/editar/**", "/borrar/**").hasRole("ADMIN")
-                .requestMatchers("/error/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/anexar", "/guardar", "/editar/**", "/borrar/**").hasRole("ADMIN") //Estas rutas solo pueden ser accedidas por usuarios con rol ADMIN
+                .requestMatchers("/error/**").permitAll() //Estas rutas son accesibles por cualquier usuario
+                .anyRequest().authenticated() //Cualquier otra ruta requiere autenticación
             )
             .formLogin(form -> form
-                .loginPage("/registro")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
+                .loginPage("/registro") //Ruta de la página de inicio de sesión personalizada, con nombre cambiado a "registro"
+                .defaultSuccessUrl("/", true) //Ruta de redirección después de iniciar sesión
+                .permitAll() //Permitir acceso a la página de inicio de sesión sin autenticación
             )
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/registro?logout")
-                .permitAll()
+                .logoutUrl("/logout") //Ruta de la página de cierre de sesión 
+                .logoutSuccessUrl("/registro?logout") //Ruta de redirección después de cerrar sesión
+                .permitAll() //Permitir acceso a la página de cierre de sesión sin autenticación
             )
             .exceptionHandling(exceptions -> exceptions
-                .accessDeniedPage("/error/403")
-                .authenticationEntryPoint((request, response, authException) -> {
-                    log.info("Intento de acceso no autenticado desde: {}", request.getRequestURL());
-                    log.error("Error de autenticación: {}", authException.getMessage());
-                    response.sendRedirect("/registro");
+                .accessDeniedPage("/error/403") //Ruta de la página de error 403
+                .authenticationEntryPoint((request, response, authException) -> { //Manejo de errores de autenticación
+                    log.info("Intento de acceso no autenticado desde: {}", request.getRequestURL()); //Registro de intento de acceso no autenticado
+                    log.error("Error de autenticación: {}", authException.getMessage()); //Registro de error de autenticación
+                    response.sendRedirect("/registro"); //Redirección a la página de inicio de sesión
                 })
             );
-
-        return http.build();
+                
+        return http.build();//Construcción de la configuración de seguridad
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() { //Bean para encriptar contraseñas
+        return new BCryptPasswordEncoder(); //Encriptación de contraseñas con BCrypt
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception { //Bean para la configuración de autenticación
+        return authenticationConfiguration.getAuthenticationManager(); //Obtención de la configuración de autenticación
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+    public DaoAuthenticationProvider authenticationProvider() { //Bean para la autenticación de usuarios
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(); //Creación de un proveedor de autenticación
+        authProvider.setUserDetailsService(userDetailsService); //Establecimiento del servicio de detalles de usuario
+        authProvider.setPasswordEncoder(passwordEncoder()); //Establecimiento del encriptador de contraseñas
+        return authProvider; //Retorno del proveedor de autenticación
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-            .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**");
+    public WebSecurityCustomizer webSecurityCustomizer() { //Bean para la configuración de seguridad web
+        return (web) -> web.ignoring() //Ignorar las siguientes rutas
+            .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**"); //Rutas de recursos estáticos
     }
 }

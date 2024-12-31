@@ -4,15 +4,19 @@ import java.util.List;
 
 import com.example.SpringEnvioMensajes.model.Persona;
 
-public interface PersonaServicio {
-    public List<Persona> listar();
+/**
+ * Interfaz que define los métodos que se pueden realizar sobre la entidad Persona.
+ */
+public interface PersonaServicio { // Interfaz que define los métodos que se pueden realizar sobre la entidad Persona.
 
-    public void guardar(Persona persona);
+    public List<Persona> listar(); // Método que lista todas las personas.
 
-    public void eliminar(Persona persona);
+    public void guardar(Persona persona); // Método que guarda una persona.
 
-    public Persona encontrarPersona(Persona persona);
+    public void eliminar(Persona persona); // Método que elimina una persona.
 
-    public Persona encontrarPrimeraPersona();
+    public Persona encontrarPersona(Persona persona); // Método que encuentra una persona.
+
+    public Persona encontrarPrimeraPersona(); // Método que encuentra la primera persona.
 
 }

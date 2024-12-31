@@ -14,11 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.lang.NonNull;
 
 
-
-
-    
-
-
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -67,10 +62,10 @@ public class WebConfig implements WebMvcConfigurer {
      * @return MessageSource configurado.
      */
     @Bean
-    public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages/messages");
-        messageSource.setDefaultEncoding("UTF-8");
+    public MessageSource messageSource() { // Método para configurar un MessageSource
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource(); // Crear un MessageSource
+        messageSource.setBasename("classpath:messages/messages"); // Establecer el archivo de propiedades de mensajes
+        messageSource.setDefaultEncoding("UTF-8"); // Establecer la codificación por defecto
         return messageSource;
     }
     
@@ -80,11 +75,11 @@ public class WebConfig implements WebMvcConfigurer {
      * Se usa para páginas en las que no se necesita lógica adicional. como 
      * páginas de error. o páginas de estáticas
      */
-    @Override
-    public void addViewControllers (@NonNull ViewControllerRegistry ingreso){
-        ingreso.addViewController ("/") .setViewName ("index");
-        ingreso.addViewController ("error/403").setViewName("error/403");
-        ingreso.addViewController ("error/404").setViewName("error/404");
+    @Override 
+    public void addViewControllers (@NonNull ViewControllerRegistry ingreso){ // Método para añadir controladores de vista
+        ingreso.addViewController ("/") .setViewName ("index"); // Página de inicio
+        ingreso.addViewController ("error/403").setViewName("error/403"); // Página de error 403
+        ingreso.addViewController ("error/404").setViewName("error/404"); // Página de error 404
     }
 
 

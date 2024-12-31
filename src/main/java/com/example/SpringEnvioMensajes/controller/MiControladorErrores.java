@@ -11,34 +11,35 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
 @Controller
-public class MiControladorErrores implements ErrorController {
+public class MiControladorErrores implements ErrorController { // Implementamos la interfaz ErrorController
 
-    @RequestMapping("/error")
-    public String handleError(HttpServletRequest request) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+    @RequestMapping("/error") // Ruta para manejar errores
+    public String handleError(HttpServletRequest request) { // Método para manejar errores
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); // Obtenemos el código de estado del error
 
-        if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
+        if (status != null) { // Si el código de estado no es nulo
+            int statusCode = Integer.parseInt(status.toString()); // Convertimos el código de estado a entero
 
-            switch (statusCode) {
+            switch (statusCode) { // Evaluamos el código de estado
                 
-                case 404:
-                    return "error/404";
+                case 404: // Si el código de estado es 404
+                    return "error/404"; // Retornamos la vista de error 404
                 /* 
                 case 403:
                     return "error/403";
                     */
-                case 500:
-                    return "error/500";
-                default:
-                    return "error/generic";
+                case 500: // Si el código de estado es 500
+                    return "error/500"; // Retornamos la vista de error 500
+                default: // Si el código de estado no es 404 ni 500
+                    return "error/generic"; // Retornamos la vista de error genérico
             }
         }
 
         return "error/generic";
     }
-    @Bean
-    public String getErrorPath() {
-        return "/error";
+
+    @Bean // Bean para manejar errores
+    public String getErrorPath() { // Método para obtener la ruta de errores
+        return "/error"; // Retornamos la ruta de errores
     }
 }

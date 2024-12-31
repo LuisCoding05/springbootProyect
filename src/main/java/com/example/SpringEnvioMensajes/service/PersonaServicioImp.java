@@ -11,38 +11,41 @@ import com.example.SpringEnvioMensajes.repository.IpersonaDao;;
 
 
 
-@Service
-public class PersonaServicioImp implements PersonaServicio {
-    @Autowired
-    private IpersonaDao personaDao;
+@Service // Marca la clase como un componente de servicio.
+/**
+ * Clase que implementa la interfaz PersonaServicio.
+ */
+public class PersonaServicioImp implements PersonaServicio { // Implementa la interfaz PersonaServicio.
+    @Autowired // Inyecta la interfaz IpersonaDao en el servicio.
+    private IpersonaDao personaDao; // Inicializa el repositorio de personas.
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Persona> listar() {
-       return (List<Persona>) personaDao.findAll();
+    @Override // Anotación que indica que el método sobrescrito es de la superclase.
+    @Transactional(readOnly = true) // Anotación que indica que el método es de solo lectura.
+    public List<Persona> listar() { // Método que lista todas las personas.
+       return (List<Persona>) personaDao.findAll(); // Devuelve una lista de personas.
     }
 
-    @Override
-    @Transactional
-    public void guardar(Persona persona) {
-       personaDao.save(persona);
+    @Override // Anotación que indica que el método sobrescrito es de la superclase.
+    @Transactional // Anotación que indica que el método es transaccional.
+    public void guardar(Persona persona) { // Método que guarda una persona.
+       personaDao.save(persona); // Guarda la persona en la base de datos.
     }
 
-    @Override
-    @Transactional
-    public void eliminar(Persona persona) {
-       personaDao.delete(persona);
+    @Override // Anotación que indica que el método sobrescrito es de la superclase.
+    @Transactional // Anotación que indica que el método es transaccional.
+    public void eliminar(Persona persona) { // Método que elimina una persona.
+       personaDao.delete(persona); // Elimina la persona de la base de datos.
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Persona encontrarPersona(Persona persona) {
-        return personaDao.findById(persona.getId()).orElse(null);
+    @Override // Anotación que indica que el método sobrescrito es de la superclase.
+    @Transactional(readOnly = true) // Anotación que indica que el método es de solo lectura.
+    public Persona encontrarPersona(Persona persona) { // Método que encuentra una persona.
+        return personaDao.findById(persona.getId()).orElse(null); // Devuelve la persona encontrada.
     }
 
-    @Override
-    public Persona encontrarPrimeraPersona() {
-        return personaDao.findFirstByOrderByIdAsc();
+    @Override // Anotación que indica que el método sobrescrito es de la superclase.
+    public Persona encontrarPrimeraPersona() { // Método que encuentra la primera persona.
+        return personaDao.findFirstByOrderByIdAsc(); // Devuelve la primera persona encontrada.
     }
 
 }
