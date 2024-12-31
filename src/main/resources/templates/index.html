@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .usuario-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+        }
+        .usuario-card h2 {
+            margin: 0 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <div id="usuarios-container">
+        <!-- Aquí se insertará la lista de usuarios -->
+    </div>
+
+    <script>
+        // Llamada a la API REST para obtener los usuarios
+        fetch('http://localhost:8080/usuarios') // URL de la API REST
+            .then(response => response.json()) // Convertir la respuesta a JSON
+            .then(usuarios => { // Procesar los datos
+                const container = document.getElementById('usuarios-container'); // Obtener el contenedor
+                usuarios.forEach(usuario => { // Iterar sobre los usuarios
+                    const card = document.createElement('div'); // Crear un elemento div
+                    card.classList.add('usuario-card'); // Añadir la clase 'usuario-card'
+                    // Insertar el contenido del usuario en el div
+                    card.innerHTML = ` 
+                        <h2>${usuario.nombre}</h2>
+                        <p>Edad: ${usuario.edad} años</p>
+                    `;
+                    container.appendChild(card); // Añadir el div al contenedor
+                });
+            })
+            .catch(error => console.error('Error al cargar usuarios:', error)); // Manejar errores
+    </script>
+</body>
+</html>
