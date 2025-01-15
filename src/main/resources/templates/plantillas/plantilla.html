@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>plantillas</title>
+</head>
+<body>
+    <header class="header" th:fragment="header">
+        <h1 th:text="#{pagina.titulo}">Header compartido</h1> 
+        <div>
+            <span th:text="#{login.usuario}"></span><span>: </span><span sec:authentication="name">usuario</span>
+        </div>
+        <hr style="width: 70%;" sec:authorize="hasRole('ROLE_ADMIN')" >
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <span th:text="#{login.rol}"></span> <span>: </span><span sec:authentication="principal.authorities"></span>
+        </div>
+    </header>
+
+    <footer class="footer" th:fragment="footer">
+        <h4>[[#{footer.lenguajes}]]</h4>
+        <div class="btn-container">
+            <a th:href="@{?(lang=es)}" class="btn lenguaje">ES</a>
+            <a th:href="@{?(lang=en)}" class="btn lenguaje">EN</a>
+            <form action="#" th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn borrar">[[#{logout.boton}]]</button>
+            </form>
+            
+        </div>
+        <hr style="width: 80%;">
+        <p> [[#{pagina.footer}]]</p>
+    </footer>
+</body>
+</html>

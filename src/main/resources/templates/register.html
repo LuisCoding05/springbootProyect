@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" type="text/css" href="/css/iniciarSesion.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="welcome-text" th:text="#{create.account}"></h1>
+    </header>
+    
+    <div class="form-wrapper">
+        <div class="form-container">
+            <form method="post" th:action="@{/register}" th:object="${usuario}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                
+                <label for="nombreUsuario" th:text="#{login.usuario}"></label>
+                <input type="text" id="nombreUsuario" name="nombreUsuario" th:field="*{nombreUsuario}" required>
+                <span class="errores" th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}"></span>
+
+                <label for="contrasenaUsuario" th:text="#{login.contrasena}"></label>
+                <input type="password" id="contrasenaUsuario" name="contrasenaUsuario" th:field="*{contrasenaUsuario}" required>
+                <span class="errores" th:if="${#fields.hasErrors('contrasenaUsuario')}" th:errors="*{contrasenaUsuario}"></span>
+                
+                <label for="rol">Rol</label>
+                <select id="rol" name="rol" th:field="*{rol}">
+                    <option value="ROLE_USER" th:text="#{login.usuario}"></option>
+                    <!-- <option value="ROLE_ADMIN">Administrador</option> -->
+                </select>
+                <span class="errores" th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}"></span>
+
+                <button type="submit" class="boton" th:text="#{create.account}"></button>
+            </form>
+            <div th:if="${error}">
+                <p th:text="${error}"></p>
+            </div>
+            <p th:text="#{no.account}"></p><a th:text="#{login.titulo}" href="/login"></a>
+        </div>
+    </div>
+    <footer th:replace="~{plantillas/plantilla :: footer}"></footer>
+</body>
+</html>
